@@ -3,7 +3,8 @@ from django.db import models
 
 class Player(models.Model):
     name = models.CharField(max_length=30, unique=True)
-    tournament = models.ManyToManyField('tournaments.Tournament', related_name='players')
+    tournament = models.ManyToManyField('tournaments.Tournament', related_name='players',
+                                   null=True, blank=True)
 
     def __str__(self):
         return self.name
