@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'players',
     'games',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
