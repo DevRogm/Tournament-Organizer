@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .models import Tournament
 from .serializers import TournamentSerializer
 from rest_framework import generics
