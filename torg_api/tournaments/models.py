@@ -13,6 +13,7 @@ class Tournament(models.Model):
     name = models.CharField(max_length=30, unique=True)
     organizer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     num_of_players = models.IntegerField(choices=PLAYERS_NUM, default=2)
+    players = models.ManyToManyField('players.Player', blank=True, related_name='tournament')
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now=True)
     start_date = models.DateTimeField(default=None, null=True, blank=True)
