@@ -20,7 +20,8 @@ class TournamentListView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(organizer=self.request.user)
 
-class TournamentDetailView(generics.RetrieveUpdateDestroyAPIView):
+
+class TournamentDetailsView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TournamentSerializer
     permission_classes = [IsAuthenticated]
 

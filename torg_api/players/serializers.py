@@ -5,7 +5,7 @@ from .models import Player
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ('name',)
+        fields = ('id', 'name',)
         extra_kwargs = {
             'name': {'validators': []},
         }
