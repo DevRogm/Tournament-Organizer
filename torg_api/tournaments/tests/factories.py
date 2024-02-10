@@ -9,6 +9,7 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = User
 
     username = factory.Sequence(lambda n: f"Test_username_name_{n}")
+    email = "test@user.pl"
 
 
 class TournamentFactory(factory.django.DjangoModelFactory):
