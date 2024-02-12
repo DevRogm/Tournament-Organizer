@@ -14,7 +14,7 @@ class NumOfPlayersValidator:
             raise serializers.ValidationError({'players': _(message)})
 
 
-class TournamentStatusValidator():
+class TournamentStatusValidator:
 
     def __init__(self, num_of_players="num_of_players", players="players", tournament_status="tournament_status"):
         self.num_of_players = num_of_players

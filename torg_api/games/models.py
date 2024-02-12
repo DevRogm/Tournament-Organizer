@@ -3,7 +3,7 @@ from django.db import models
 
 class Game(models.Model):
     name = models.CharField(max_length=30, default='')
-    tournament = models.ForeignKey('tournaments.Tournament', on_delete=models.PROTECT, related_name='tournament')
+    tournament = models.ForeignKey('tournaments.Tournament', on_delete=models.PROTECT, related_name='games')
     player_1 = models.ForeignKey('players.Player', on_delete=models.PROTECT, related_name='player_1', null=True,
                                  blank=True)
     player_2 = models.ForeignKey('players.Player', on_delete=models.PROTECT, related_name='player_2', null=True,

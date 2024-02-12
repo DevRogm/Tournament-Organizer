@@ -1,9 +1,11 @@
 from .models import Tournament
+from games.models import Game
 from .serializers import TournamentSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
+from rest_framework.response import Response
 
 
 class TournamentListView(generics.ListCreateAPIView):
@@ -28,3 +30,9 @@ class TournamentDetailsView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         queryset = Tournament.objects.filter(organizer=self.request.user)
         return queryset
+
+    def perform_update(self, serializer):
+        tournament = Tournament.objects.get(name=serializer.validated_data['name'])
+        if serializer.validated_data['tournament_status'] == 'ongoing':
+            print("Create games for this tournament")
+        serializer.save()
