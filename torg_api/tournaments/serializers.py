@@ -4,7 +4,7 @@ from django.db import transaction
 from django.contrib.auth.models import User
 from players.serializers import PlayerSerializer
 from players.models import Player
-from validators import NumOfPlayersValidator
+from .validators import NumOfPlayersValidator
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,9 +32,8 @@ class TournamentSerializer(serializers.ModelSerializer):
         :return:
         """
         players_data = validated_data.pop("players")
+        instance.players.set([])
         if players_data:
-            instance.players.set([])
             [instance.players.add(Player.objects.get(**player)) for player in players_data]
-        else:
-            instance.players.set([])
+        super().update(instance=instance, validated_data=validated_data)
         return instance
