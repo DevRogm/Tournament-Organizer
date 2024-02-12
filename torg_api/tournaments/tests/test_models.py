@@ -11,5 +11,3 @@ class TestTournamentModel:
 
     def test_tournament_str(self, tournament):
         assert tournament.__str__() == "test_name"
-
-
