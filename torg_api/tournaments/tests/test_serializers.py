@@ -51,18 +51,8 @@ class TestTournamentSerializer:
         tournament_serializer = TournamentSerializer(instance=tournament)
         assert tournament_serializer['players']
 
-    def test_tournament_data_with_add_too_much_players(self, tournament, players):
-        [tournament.players.add(player) for player in players[:4]]
+    def test_tournament_data_with_add_too_much_players_using_api(self, tournament, players):
         tournament_serializer = TournamentSerializer(instance=tournament)
-        # assert len(tournament_serializer.data['players']) == 4
-        # assert list(tournament_serializer.data['players'][0].keys()) == ['id', 'name']
-
-    # def test_tournament_data_remove_players(self, tournament):
-    #     tournament.organizer.username = self.username
-    #     serializer = TournamentSerializer(instance=tournament)
-    #     assert serializer.data == self.expected_data
-    #
-    # def test_tournament_data_with_add_wrong_num_of_players(self, tournament):
-    #     tournament.organizer.username = self.username
-    #     serializer = TournamentSerializer(instance=tournament)
-    #     assert serializer.data == self.expected_data
+        with pytest.raises(serializers.ValidationError):
+            [tournament.players.add(player) for player in players[:6]]
+            tournament_serializer.validators[0](tournament_serializer.data)
