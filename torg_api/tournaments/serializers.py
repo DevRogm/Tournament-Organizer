@@ -4,6 +4,7 @@ from django.db import transaction
 from django.contrib.auth.models import User
 from players.serializers import PlayerSerializer
 from players.models import Player
+from .validators import NumOfPlayersValidator
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,8 +14,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TournamentSerializer(serializers.ModelSerializer):
-    players = PlayerSerializer(many=True)
+    players = PlayerSerializer(many=True, required=False)
     organizer = UserSerializer(read_only=True)
+    requires_context = True
+    validators = [NumOfPlayersValidator()]
 
     class Meta:
         model = Tournament
@@ -22,10 +25,15 @@ class TournamentSerializer(serializers.ModelSerializer):
         read_only_fields = ('organizer',)
 
     def update(self, instance, validated_data):
+        """
+        This function allow us to add nested fields like players
+        :param instance:
+        :param validated_data:
+        :return:
+        """
         players_data = validated_data.pop("players")
+        instance.players.set([])
         if players_data:
-            instance.players.set([])
             [instance.players.add(Player.objects.get(**player)) for player in players_data]
-        else:
-            instance.players.set([])
+        super().update(instance=instance, validated_data=validated_data)
         return instance
