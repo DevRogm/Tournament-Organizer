@@ -28,8 +28,7 @@ def generate_games(num_of_players, tournament_name, tournament_players_list):
     games_in_round = None
     count = 1
     length_of_previous_round = None
-    player_1 = ""
-    player_2 = ""
+
     for number in range(num_of_players, 1, -1):
         games_in_round = int(number / 2)
         if is_even(games_in_round) and is_half_of_previous_rounds(length_of_previous_round, games_in_round):
@@ -38,6 +37,9 @@ def generate_games(num_of_players, tournament_name, tournament_players_list):
                     random.shuffle(tournament_players_list)
                     player_1 = tournament_players_list.pop()
                     player_2 = tournament_players_list.pop()
+                else:
+                    player_1 = None
+                    player_2 = None
                 list_of_games.append(
                     {"name": f"{tournament_name}_game_{count}_{column}", "round": count, "player_1": player_1,
                      "player_2": player_2})
