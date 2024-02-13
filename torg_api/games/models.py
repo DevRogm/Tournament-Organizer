@@ -11,3 +11,4 @@ class Game(models.Model):
     score_1 = models.PositiveIntegerField(null=True, default=None, blank=True)
     score_2 = models.PositiveIntegerField(null=True, default=None, blank=True)
     winner = models.CharField(max_length=30, null=True, default=None, blank=True)
+    round = models.PositiveIntegerField(null=True, default=None, blank=True)
