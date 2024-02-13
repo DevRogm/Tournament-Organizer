@@ -23,6 +23,8 @@ def is_half_of_previous_rounds(length_of_previous_round, length_current_round):
 def generate_games(num_of_players, tournament_name, tournament_players_list):
     """
     Function that generates games depends on num of players and draws pairs for tge first round
+    Number of games is always one less than the number of players
+    Number of games per round is always half the previous number of games
     """
     list_of_games = []
     games_in_round = None
