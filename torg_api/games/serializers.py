@@ -13,10 +13,15 @@ class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('id', 'name', 'tournament', 'player_1', 'player_2', 'score_1', 'score_2', 'winner')
+        fields = ('id', 'name', 'tournament', 'player_1', 'player_2', 'score_1', 'score_2', 'winner', 'is_approved')
         validators = [
             UniqueTogetherValidator(
                 queryset=Game.objects.all(),
                 fields=['name', 'tournament']
             )
         ]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation.pop('tournament')
+        return representation

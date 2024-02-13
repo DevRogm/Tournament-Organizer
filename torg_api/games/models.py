@@ -12,6 +12,7 @@ class Game(models.Model):
     score_2 = models.PositiveIntegerField(null=True, default=None, blank=True)
     winner = models.CharField(max_length=30, null=True, default=None, blank=True)
     round = models.PositiveIntegerField(null=True, default=None, blank=True)
+    is_approved = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ['name', 'tournament']
