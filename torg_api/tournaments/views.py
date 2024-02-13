@@ -35,7 +35,7 @@ class TournamentDetailsView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         tournament = Tournament.objects.get(name=serializer.validated_data['name'])
         if serializer.validated_data['tournament_status'] == 'ongoing':
-            game_list = generate_games(tournament.num_of_players, tournament.name)
+            game_list = generate_games(tournament.num_of_players, tournament.name, list(tournament.players.all()))
             if game_list:
                 games_obj_to_create = [Game(tournament=tournament, **game_data) for game_data in game_list]
                 Game.objects.bulk_create(games_obj_to_create)
