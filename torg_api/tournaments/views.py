@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
+from .utils import generate_games
 
 
 class TournamentListView(generics.ListCreateAPIView):
@@ -34,5 +35,6 @@ class TournamentDetailsView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         tournament = Tournament.objects.get(name=serializer.validated_data['name'])
         if serializer.validated_data['tournament_status'] == 'ongoing':
+            print(generate_games(tournament.num_of_players, tournament.name))
             print("Create games for this tournament")
         serializer.save()
