@@ -43,11 +43,12 @@ def generate_games(num_of_players, tournament_name, tournament_players_list):
                     player_1 = None
                     player_2 = None
                 list_of_games.append(
-                    {"name": f"{tournament_name}_game_{count}_{column}", "round": count, "player_1": player_1,
+                    {"name": f"{tournament_name}_game_{count}_{column}", "round": count, "game_num": column,
+                     "player_1": player_1,
                      "player_2": player_2})
             count += 1
             length_of_previous_round = games_in_round
 
     if games_in_round == 1:
-        list_of_games.append({"name": f"{tournament_name}_game_{count}_{1}", "round": count})
+        list_of_games.append({"name": f"{tournament_name}_game_{count}_{1}", "round": count, "game_num": 1})
     return list_of_games
