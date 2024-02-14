@@ -27,9 +27,6 @@ class TournamentSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         """
         This function allow us to add nested fields like players
-        :param instance:
-        :param validated_data:
-        :return:
         """
         players_data = validated_data.pop("players")
         instance.players.set([])
