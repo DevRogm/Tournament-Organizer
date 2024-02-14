@@ -10,6 +10,6 @@ class GameResultApproveValidator:
         self.is_approved = is_approved
 
     def __call__(self, attrs):
-        if not attrs[self.score_1] or not attrs[self.score_2] and attrs[self.is_approved]:
+        if (not attrs[self.score_1] or not attrs[self.score_2]) and attrs[self.is_approved]:
             message = f"Cannot approve game result without both scores"
             raise serializers.ValidationError({'is_approved': _(message)})

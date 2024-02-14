@@ -16,9 +16,6 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = ('id', 'name', 'tournament', 'player_1', 'player_2', 'score_1', 'score_2', 'winner', 'is_approved')
-        extra_kwargs = {
-            'winner': {'read_only': True},
-        }
         validators = [
             UniqueTogetherValidator(
                 queryset=Game.objects.all(),
