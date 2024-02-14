@@ -16,7 +16,7 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = (
-        'id', 'name', 'tournament', 'player_1', 'player_2', 'score_1', 'score_2', 'winner', 'is_approved', 'round',
+        'id', 'name', 'tournament', 'player_1', 'player_2', 'score_1', 'score_2', 'is_approved', 'game_round',
         'game_num')
         validators = [
             UniqueTogetherValidator(
