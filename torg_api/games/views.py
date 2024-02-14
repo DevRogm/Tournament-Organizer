@@ -1,3 +1,5 @@
+import datetime
+
 from .serializers import GameSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
@@ -27,4 +29,9 @@ class GameDetailsView(generics.RetrieveUpdateDestroyAPIView):
                 elif not next_game.player_2 and next_game.player_1 != winner_obj:
                     next_game.player_2 = winner_obj
                 next_game.save()
+            if not next_game:
+                tournament = game.tournament
+                tournament.tournament_status = 'complete'
+                tournament.end_date = datetime.datetime.now()
+                tournament.save()
         serializer.save()
