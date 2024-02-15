@@ -12,7 +12,8 @@ class GameListView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Game.objects.filter(tournament__organizer=self.request.user).select_related("tournament__organizer")
+        queryset = Game.objects.filter(tournament__organizer=self.request.user).select_related(
+            "tournament__organizer", "player_1", "player_2").prefetch_related("tournament__players")
         return queryset
 
 
@@ -21,7 +22,8 @@ class GameDetailsView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Game.objects.filter(tournament__organizer=self.request.user).select_related("tournament__organizer")
+        queryset = Game.objects.filter(tournament__organizer=self.request.user).select_related(
+            "tournament__organizer", "player_1", "player_2").prefetch_related("tournament__players")
         return queryset
 
     def perform_update(self, serializer):
