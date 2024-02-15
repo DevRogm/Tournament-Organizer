@@ -17,6 +17,8 @@ class TournamentListView(generics.ListCreateAPIView):
     ordering_fields = ['name', 'num_of_players', 'tournament_status']
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Tournament.objects.none()
         queryset = Tournament.objects.filter(organizer=self.request.user)
         return queryset
 

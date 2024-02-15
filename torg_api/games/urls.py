@@ -5,5 +5,5 @@ app_name = 'games'
 
 urlpatterns = [
     path('', views.GameListView.as_view(), name='games_list'),
-    path('<pk>/', views.GameDetailsView.as_view(), name='game_details')
+    path('<int:pk>/', views.GameDetailsView.as_view(), name='game_details')
 ]
