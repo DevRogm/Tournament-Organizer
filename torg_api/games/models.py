@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
 
+
 class Game(models.Model):
     name = models.CharField(max_length=30, default='')
     tournament = models.ForeignKey('tournaments.Tournament', on_delete=models.PROTECT, related_name='games')

@@ -19,7 +19,7 @@ class TournamentListView(generics.ListCreateAPIView):
     def get_queryset(self):
         if getattr(self, "swagger_fake_view", False):
             return Tournament.objects.none()
-        queryset = Tournament.objects.filter(organizer=self.request.user)
+        queryset = Tournament.objects.filter(organizer=self.request.user).select_related("organizer")
         return queryset
 
     def perform_create(self, serializer):
@@ -31,7 +31,8 @@ class TournamentDetailsView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Tournament.objects.filter(organizer=self.request.user)
+        queryset = Tournament.objects.filter(organizer=self.request.user).select_related('organizer').prefetch_related(
+            "players")
         return queryset
 
     def perform_update(self, serializer):
