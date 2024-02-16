@@ -11,5 +11,3 @@ class TestGameModel:
 
     def test_game_init(self, game):
         assert game
-
-

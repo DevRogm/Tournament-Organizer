@@ -7,7 +7,7 @@ from .models import Game
 from .utils import get_winner, get_next_game
 
 
-class GameListView(generics.ListCreateAPIView):
+class GameListView(generics.ListAPIView):
     serializer_class = GameSerializer
     permission_classes = [IsAuthenticated]
 

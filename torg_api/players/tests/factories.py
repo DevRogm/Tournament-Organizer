@@ -6,7 +6,6 @@ import factory
 class PlayerFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Player
-        # skip_postgeneration_save = True
 
     name = factory.Sequence(lambda n: f"Test_player_name_{n+1}")
     organizer = factory.SubFactory(UserFactory)

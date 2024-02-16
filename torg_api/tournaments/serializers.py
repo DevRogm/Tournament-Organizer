@@ -25,11 +25,9 @@ class TournamentSerializer(serializers.ModelSerializer):
         read_only_fields = ('organizer',)
 
     def update(self, instance, validated_data):
-        """
-        This function allow us to add nested fields like players
-        """
         players_data = validated_data.pop("players")
         instance.players.set([])
+        # This code allows us to add nested fields like players
         if players_data:
             [instance.players.add(Player.objects.get(**player)) for player in players_data]
         super().update(instance=instance, validated_data=validated_data)
