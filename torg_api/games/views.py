@@ -29,14 +29,18 @@ class GameDetailsView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         game = self.get_object()
         if serializer.validated_data['is_approved'] and not game.is_approved:
+            # Find the winner
             winner_obj = get_winner(game.player_1, game.player_2, game.score_1, game.score_2)
+            # Check if there is another game
             next_game = get_next_game(game.game_round, game.game_num, game.tournament)
+            # If there is a winner and there is another game, put the winner in it
             if winner_obj and next_game:
                 if not next_game.player_1:
                     next_game.player_1 = winner_obj
                 elif not next_game.player_2 and next_game.player_1 != winner_obj:
                     next_game.player_2 = winner_obj
                 next_game.save()
+            # If there is no next game, it means that it was the final and the tournament can be ended
             if not next_game:
                 tournament = game.tournament
                 tournament.tournament_status = 'complete'

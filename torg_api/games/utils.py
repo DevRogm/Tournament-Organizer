@@ -1,8 +1,8 @@
-from ..tournaments.utils import is_even
+from tournaments.utils import is_even
 from .models import Game
 from django.core.exceptions import ObjectDoesNotExist
-from ..players.models import Player
-from ..tournaments.models import Tournament
+from players.models import Player
+from tournaments.models import Tournament
 from typing import Union
 
 

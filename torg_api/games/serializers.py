@@ -1,13 +1,14 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
-
 from .models import Game
-from tournaments.serializers import TournamentSerializer
 from players.serializers import PlayerSerializer
 from .validators import GameResultApproveValidator
 
 
 class GameSerializer(serializers.ModelSerializer):
+    """
+    Serializer for game model with validator. The validator checks whether the game result can be confirmed.
+    """
     player_1 = PlayerSerializer(read_only=True)
     player_2 = PlayerSerializer(read_only=True)
     validators = [GameResultApproveValidator()]
