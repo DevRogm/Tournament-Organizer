@@ -14,6 +14,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TournamentSerializer(serializers.ModelSerializer):
+    """
+    Serializer for tournament model with validator.
+    Validators check whether the appropriate number of players is not greater than the maximum and whether the
+    tournament status can be changed
+    """
     players = PlayerSerializer(many=True, required=False)
     organizer = UserSerializer(read_only=True)
     requires_context = True
@@ -26,7 +31,7 @@ class TournamentSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """
-        This function allow us to add nested fields like players
+        Modified function to allow adding nested fields as players
         """
         players_data = validated_data.pop("players")
         instance.players.set([])
