@@ -7,6 +7,7 @@ from players.models import Player
 from .validators import NumOfPlayersValidator, TournamentStatusValidator
 
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -28,6 +29,11 @@ class TournamentSerializer(serializers.ModelSerializer):
         model = Tournament
         fields = ('id', 'name', 'num_of_players', 'description', 'organizer', 'tournament_status', 'players')
         read_only_fields = ('organizer',)
+
+    def create(self, validated_data):
+        validated_data.pop('players')
+        tournament = Tournament.objects.create(**validated_data)
+        return tournament
 
     def update(self, instance, validated_data):
         """

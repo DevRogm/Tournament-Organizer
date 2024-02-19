@@ -16,3 +16,15 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validate_data['password'])
         user.save()
         return user
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        write_only=True,
+        required=True,
+        style={'input_type': 'password', 'placeholder': 'Password'}
+    )
+
+    class Meta:
+        fields = ('email', 'password')
