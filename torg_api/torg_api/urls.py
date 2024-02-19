@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/tournaments/', include('tournaments.urls', namespace='tournaments')),
     path('api/players/', include('players.urls', namespace='players')),
     path('api/games/', include('games.urls', namespace='games')),
+    path('api/auth/', include('accounts.urls', namespace='accounts')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/docs/', SpectacularSwaggerView.as_view(url_name='schema')),
     path('__debug__/', include('debug_toolbar.urls')),
