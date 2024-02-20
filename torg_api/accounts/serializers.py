@@ -13,28 +13,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    is_admin = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['id', 'username', 'email', 'is_admin']
 
-    def create(self, validate_data):
-        user = User(
-            username=validate_data['username'],
-            email=validate_data['email']
-        )
-        user.set_password(validate_data['password'])
-        user.save()
-        return user
-
-
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(
-        write_only=True,
-        required=True,
-        style={'input_type': 'password', 'placeholder': 'Password'}
-    )
-
-    class Meta:
-        fields = ('email', 'password')
+    def get_is_admin(self, obj):
+        return obj.is_staff

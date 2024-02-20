@@ -7,8 +7,7 @@ from players.models import Player
 from .validators import NumOfPlayersValidator, TournamentStatusValidator
 
 
-
-class UserSerializer(serializers.ModelSerializer):
+class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email')
@@ -21,7 +20,7 @@ class TournamentSerializer(serializers.ModelSerializer):
     tournament status can be changed
     """
     players = PlayerSerializer(many=True, required=False)
-    organizer = UserSerializer(read_only=True)
+    organizer = UsersSerializer(read_only=True)
     requires_context = True
     validators = [NumOfPlayersValidator(), TournamentStatusValidator()]
 
