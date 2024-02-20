@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, LoginSerializer
+from .serializers import UserSerializer, LoginSerializer, MyTokenObtainPairSerializer
 from rest_framework import generics
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
@@ -8,6 +8,11 @@ from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 
 class UserRegisterView(generics.CreateAPIView):
