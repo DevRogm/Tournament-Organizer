@@ -1,30 +1,37 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        serializer = UserSerializerWithToken(self.user).data
+        for k, v in serializer.items():
+            data[k] = v
+        return data
 
 
 class UserSerializer(serializers.ModelSerializer):
+    is_admin = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['id', 'username', 'email', 'is_admin']
 
-    def create(self, validate_data):
-        user = User(
-            username=validate_data['username'],
-            email=validate_data['email']
-        )
-        user.set_password(validate_data['password'])
-        user.save()
-        return user
+    def get_is_admin(self, obj):
+        return obj.is_staff
 
 
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(
-        write_only=True,
-        required=True,
-        style={'input_type': 'password', 'placeholder': 'Password'}
-    )
+class UserSerializerWithToken(UserSerializer):
+    token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        fields = ('email', 'password')
+        model = User
+        fields = ['id', 'username', 'email', 'is_admin', 'token']
+
+    def get_token(self, obj):
+        token = RefreshToken.for_user(obj)
+        return str(token.access_token)

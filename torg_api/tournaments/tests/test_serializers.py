@@ -2,7 +2,7 @@ from collections import OrderedDict
 import json
 import pytest
 from django.contrib.auth.models import User
-from tournaments.serializers import TournamentSerializer, UserSerializer
+from tournaments.serializers import TournamentSerializer, UsersSerializer
 from players.serializers import PlayerSerializer
 from players.tests import factories, conftest
 from players.models import Player
@@ -20,7 +20,7 @@ class TestUserSerializer:
         return user
 
     def test_user_data(self, user):
-        serializer = UserSerializer(instance=user)
+        serializer = UsersSerializer(instance=user)
         assert serializer.data == self.expected_data
 
 
