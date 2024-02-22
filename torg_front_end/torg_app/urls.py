@@ -4,6 +4,6 @@ from . import views
 app_name = 'torg_app'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('tournaments/', views.tournaments, name='tournaments')
+    path('', views.dashboard, name='dashboard'),
+    path('login/', views.login, name='login_view'),
 ]
