@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.conf import settings
 
+
 class Tournament(models.Model):
     PLAYERS_NUM = [(2 ** num, 2 ** num) for num in range(1, 6)]
     STATUS_CHOICES = (
@@ -22,4 +23,3 @@ class Tournament(models.Model):
 
     def __str__(self):
         return self.name
-

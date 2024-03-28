@@ -69,6 +69,7 @@ def generate_games(num_of_players: int, tournament_name: str, tournament_players
                     player_2 = None
                 # Create a list of games with names suggesting the round number and game number,
                 # and players assigned or not
+                tournament_name = tournament_name.replace(" ", "_")
                 list_of_games.append(
                     {"name": f"{tournament_name}_game_{game_round}_{game_num}", "game_round": game_round,
                      "game_num": game_num,
